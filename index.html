@@ -87,7 +87,7 @@
 
 <h1>Install and Launch Web Apps</h1>
 <button id="launchBtn">Open App in Iframe</button>
-<button id="launchOtherBtn">Launch Another App (about:blank in iframe)</button>
+<button id="launchOtherBtn">Launch Blank App (about:blank)</button>
 
 <!-- Overlay container for iframe -->
 <div id="iframeContainer">
@@ -104,20 +104,21 @@
   const closeBtn = document.getElementById('closeBtn');
   const iframe = document.getElementById('appIframe');
 
-  // Load the target URL directly
+  // Load target URL in iframe
   launchBtn.onclick = () => {
     iframe.src = 'https://v4-psi-pied.vercel.app/';
     iframeContainer.style.display = 'flex';
   };
 
-  // Launch another app in a new tab with about:blank iframe
+  // Open a new window with an iframe pointing to about:blank
   launchOtherBtn.onclick = () => {
     const newWindow = window.open('', '_blank');
+    // Write minimal HTML with iframe to new window
     newWindow.document.write(`
       <!DOCTYPE html>
       <html lang="en">
       <head>
-        <title>About:blank iframe app</title>
+        <title>About:blank App</title>
         <style>
           body {
             margin: 0;
@@ -137,11 +138,11 @@
             background-color: #ff6f61;
             color: #fff;
             cursor: pointer;
+            align-self: flex-end;
           }
           #iframeContainer {
             flex: 1;
             display: flex;
-            flex-direction: column;
             margin: 10px;
             border-radius: 8px;
             overflow: hidden;
@@ -155,7 +156,7 @@
         </style>
       </head>
       <body>
-        <button onclick="window.close()">Close This Window</button>
+        <button onclick="window.close()">Close Window</button>
         <div id="iframeContainer">
           <iframe sandbox="allow-scripts allow-same-origin" src="about:blank"></iframe>
         </div>
