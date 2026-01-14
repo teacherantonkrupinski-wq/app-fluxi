@@ -1,4 +1,4 @@
-// Basic Service Worker for offline support (optional)
+// Basic Service Worker
 self.addEventListener('install', event => {
   self.skipWaiting();
 });
