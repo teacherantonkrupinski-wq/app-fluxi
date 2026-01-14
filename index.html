@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Device App Launcher</title>
+<!-- Manifest for PWA -->
+<link rel="manifest" href="manifest.json" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+  }
 
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff6f61;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background-color: #ff3b2e;
+    transform: scale(1.05);
+  }
+
+  #iframeContainer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+
+  #closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff3;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+  }
+
+  #iframeWrapper {
+    width: 90%;
+    height: 80%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    margin-top: 50px;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Install and Launch Web App</h1>
+<button id="launchBtn">Open App in Iframe</button>
+
+<!-- Overlay container for iframe -->
+<div id="iframeContainer">
+  <button id="closeBtn">Close</button>
+  <div id="iframeWrapper">
+    <iframe id="appIframe" sandbox="allow-scripts allow-same-origin"></iframe>
+  </div>
+</div>
+
+<script>
+  const launchBtn = document.getElementById('launchBtn');
+  const iframeContainer = document.getElementById('iframeContainer');
+  const closeBtn = document.getElementById('closeBtn');
+  const iframe = document.getElementById('appIframe');
+
+  // Load the target URL directly
+  launchBtn.onclick = () => {
+    iframe.src = 'https://v4-psi-pied.vercel.app/';
+    iframeContainer.style.display = 'flex';
+  };
+
+  closeBtn.onclick = () => {
+    iframe.src = '';
+    iframeContainer.style.display = 'none';
+  };
+
+  // Register service worker for PWA (optional)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(console.log);
+  }
+</script>
+</body>
+</html>
